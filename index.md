@@ -41,6 +41,10 @@ Para trabajar con los diferentes ejemplos que veremos en esta unidad, solo tenem
 
 `dart nombre_de_fichero.dart`
 
+En proyectos más complejos creados con Dart, también es habitual ejecutar aplicaciones mediante:
+
+`dart run nombre_proyecto`
+
 Alternativamente, también podemos trabajar con el [Playground de Dart](https://dartpad.dev/). Éste, además, tiene la ventaja que incluye en la misma ventana el editor de código con resaltado de sintaxis y detección de errores, la salida del programa, documentación y algunos ejemplos, tanto con Dart como con Flutter para explorar las diferentes posibilidades de los mismos.
 
 ### **Conceptos básicos.**
@@ -79,7 +83,7 @@ Vemos algunos detalles de Dart en este código:
 ### **Entrada y salida**
 Como hemos visto, para mostrar mensajes para la consola podemos hacer uso de la función `print()`, pero esta no es la única forma.
 
-Dart provee a través de la biblioteca *dart:io* mecanismos para gestionar la entrada y la entrada a través de consola y teclado, entre otros. 
+Dart provee a través de la biblioteca `dart:io` mecanismos para gestionar la entrada y la salida a través de consola y teclado, entre otros. 
 
 Concretamente, para la salida por consola nos provee el método `write()` de las clases `stdout` y `stderr`, correspondiente a la salida estándar y de error respectivamente. En cuanto a la entrada por teclado, podemos hacer uso del método `readLineSync()` de la clase `stdin`.
 
@@ -90,7 +94,7 @@ import 'dart:io';
 
 void main(){
   stdout.write("Hola! Cómo te llamas? ");
-  var name=stdin.readLineSync();
+  var name = stdin.readLineSync();
   print("Hola $name!");
 }
 ```
@@ -114,12 +118,14 @@ Hay que decir que, la clase `Stdin` permite al usuario leer datos de la entrada 
 
 Los tipos de datos soportados por Dart son:
 
-- **Numéricos**: enteros (int) y decimales (double),
-- **Cadenas de caracteres**: String
-- **Valores lógicos**: bool
+- **Numéricos**: enteros (`int`) y decimales (`double`),
+- **Cadenas de caracteres**: (`String`)
+- **Valores lógicos**: (`bool`)
 - **Colecciones de objetos**: Listas (`List`), Conjuntos (`Set`) y diccionarios (`Map`)
 
-Para declarar una variable con Dart podemos utilizar `var`, de manera que el tipo de dato se infiera forma automática a partir del valor dado, o bien indicar directamente el tipo. Una vez se asigna un tipo a una variable, este tipo ya no se puede modificar. Veamos algunos ejemplos:
+Para declarar una variable con Dart podemos utilizar `var`, de manera que el tipo de dato se infiera forma automática a partir del valor dado, o bien indicar directamente el tipo. Una vez inferido o declarado un tipo para una variable, ésta sólo podrá almacenar valores compatibles con dicho tipo. 
+
+Veamos algunos ejemplos:
 
 ```dart
 var dia='jueves';       // Infiere el tipo a String
@@ -131,6 +137,8 @@ bool laborable=true;    // Definimos un valor bool
 String cadena_numero="1";               // Definimos un String que contiene un número
 int numero2=int.parse(cadena_numero);   // Convierte la cadena "1" a un tipo numérico
 ```
+
+Además de los tipos básicos, Dart dispone del tipo `Object`, del que heredan todos los objetos del lenguaje.
 
 ### **Constantes y finales**
 
@@ -214,6 +222,12 @@ Dart es un lenguaje que soporta tanto tipado estático como dinámico. Cuando ha
 
 Para ello, se hace uso del tipo `dynamic`, un tipo de dato subyacente a todos los objetos Dart, y que nos permite utilizar tipado dinámico de datos, de manera que la comprobación de estos tipos se realiza en tiempo de ejecución en lugar de tiempo de compilación.
 
+```dart
+List<dynamic> paises;
+```
+
+Encontraremos este tipo con frecuencia cuando trabajemos con datos procedentes de servicios web, ya que inicialmente la información obtenida desde una API suele representarse mediante estructuras dinámicas que posteriormente convertiremos en objetos Dart.
+
 Tenemos más detalles al artículo [Dart es un lenguaje de programación de tipo estático o dinámico](https://medium.com/@farhanaslam910/dart-is-a-static-or-dynamic-typed-programming-language-3d934c95b7b)
 
 ### **Tipos enumerados**
@@ -266,13 +280,13 @@ import 'dart:io';
 void main(List<String> args) {
   // Ejemplo sencillo de if
   if (args.length != 1) {
-    print("Error, hay que poner u argumento");
+    print("Error, hay que introducir un argumento");
     exit(1);
   }
 
   // Recogemos el valor del primer argumento
   //Utilizamos un bloque try-catch por si
-  // hay una excepcion de tipo
+  // hay una excepción de tipo
 
   var temperatura;
   try {
@@ -289,7 +303,7 @@ void main(List<String> args) {
   if (temperatura > 21) {
     print("Hace calor");
   } else {
-    print("Hace fío");
+    print("Hace frío");
   }
 
   // Ejemplo de operador condicional ternario
@@ -323,7 +337,7 @@ import 'dart:io';
 void main(List<String> args) {
   // Ejemplo sencillo de if
   if (args.length != 1) {
-    print("Error, hay que poner u argumento");
+    print("Error, hay que indicar un argumento");
     exit(1);
   }
 
@@ -338,7 +352,7 @@ void main(List<String> args) {
       print("No es laborable");
       break;
     default:
-      print('És laborable o no es un dia correcto');
+      print('Es laborable o no es un dia correcto');
   }
 }
 ```
@@ -355,10 +369,11 @@ void main(List<String> args) {
   // Ejemplo for
   for (int i = 0; i <= 10; i++) {
     //Comprobamos si es par
-    if (i.isEven)
+    if (i.isEven){
       print("${i} es par");
-    else
+    } else{
       print("${i} es impar");
+    }
   }
 }
 ```
@@ -401,6 +416,41 @@ void main(List<String> args) {
 }
 ```
 
+**Ejemplo 4. Uso de for..in**
+```dart
+void main() {
+  List<String> continentes = [
+    "Europa",
+    "Asia",
+    "África",
+    "América",
+    "Oceanía"
+  ];
+
+  for (var continente in continentes) {
+    print(continente);
+  }
+}
+```
+
+**Ejemplo 5. Uso de forEach**
+
+Es una forma funcional de recorrer colecciones.
+
+```dart
+List<String> continentes = [
+  "Europa",
+  "Asia",
+  "África",
+  "América",
+  "Oceanía"
+];
+
+continentes.forEach((continente) {
+  print(continente);
+});
+```
+
 <br>
 <br>
 
@@ -428,6 +478,12 @@ void funcion(tipo1 argumento1, ..., tipoN argumentoN){
 }
 ```
 
+```dart
+void mostrarPais(String pais) {
+  print("País seleccionado: $pais");
+}
+```
+
 ### Función con argumentos y con valor de retorno
 
 ```dart
@@ -443,14 +499,17 @@ tipoRetorno funcion(tipo1 argument1, ..., tipoN argumentN){
 
 Dart admite funciones sin nombre o funciones anónimas, que no pueden ser invocadas directamente, pero que pueden utilizarse como `callbacks`, es decir, como argumentos para otras funciones. 
 
-Por ejemplo, definimos una función `funcion` que recibe tres argumentos: los dos primeros (`arg1` y `arg2`) son valores, y el tercero es una función anónima (`callback`). Esta función `funcion`, lo que hace a su cuerpo es invocar la función que se nos proporciona como argumento, y devuelve el valor que ésta nos proporciona:
+Por ejemplo, definimos una función `funcion` que recibe tres argumentos: los dos primeros (`arg1` y `arg2`) son valores, y el tercero es una función anónima (`callback`). Esta función `funcion`, lo que hace en su cuerpo es invocar la función que se nos proporciona como argumento, y devuelve el valor que ésta nos proporciona:
 
 ```dart
 // Función que recibe dos argumentos y una
 // función anónima que hace de callback
-int funcion(arg1, arg2, callback){
-  int valor=callback(arg1, arg2);
-  return valor;
+int funcion(
+    int arg1,
+    int arg2,
+    int Function(int, int) callback) {
+
+  return callback(arg1, arg2);
 }
 ```
 
@@ -461,7 +520,7 @@ Ahora, podemos utilizar esta función proporcionándole en el momento de la invo
 ```dart
 void main(){
   int valor=funcion(3, 4, (arg1, arg2){
-    // Estem dins de la funció anònima
+    // Estamos dentro de la función anónima
     return (arg1+arg2);
   });
   print(valor);
@@ -471,7 +530,8 @@ void main(){
 Como vemos la función anónima recibe dos argumentos y devuelve el valor de su suma.
 
 ### **Funciones flecha**
-Por su parte, las funciones flecha o **arrow functions** nos permiten abreviar la declaración de una función anónima cuando ésta consta sólo de una línea, de manera que no utilizan ni las claves ni la palabra reservada. 
+
+Por su parte, las funciones flecha o **arrow functions** nos permiten abreviar la declaración de una función anónima cuando ésta consta sólo de una línea, de manera que no utilizan ni las llaves ni la palabra reservada `return`. 
 
 El ejemplo anterior, podría haberse expresado con funciones flecha de la siguiente manera:
 
@@ -534,6 +594,8 @@ funcionX(
 
 Como veremos posteriormente, esta será una construcción muy común cuando generemos componentes visuales con Flutter.
 
+También es muy habitual cuando utilizamos constructores con argumentos con nombre para crear objetos.
+
 <br>
 <br>
 
@@ -556,7 +618,7 @@ Vemos algunas formas de definir listas:
 
 ```dart
 // Lista nula
-List lista_nula;
+List? lista_nula;
 
 // Lista Vacía
 List listaVacia=[];
@@ -566,10 +628,18 @@ List<String> listaVaciaTipo=[];   // Forma 1
 List<String> _lista=<String>[];   // Forma 2
 
 // Lista con valores
-List laborables=['lunes' , 'martes', 'miércoles', 'jueves', 'viernes'];
+List<String> laborables=['lunes' , 'martes', 'miércoles', 'jueves', 'viernes'];
 
 // Lista con valores especificando el tipo
 List<String> festivos=['sábado', 'domingo'];
+
+List<String> continentes = [
+  "Europa",
+  "Asia",
+  "África",
+  "América",
+  "Oceanía"
+];
 ```
 
 ### Manipulación de listas
@@ -594,12 +664,26 @@ laborables.removeLast();
 laborables.removeAt(posicion);
 
 // Añadiendo un lista completa al final de otra
-List diasSemana=[];
+List<String> diasSemana=[];
 diasSemana.addAll(laborables);
 diasSemana.addAll(festivos);
 print (diasSemana);
 ```
 En este último punto, para poder utilizar `addAll`, necesitamos que la lista haya sido inicializada (no sea null).
+
+### Operador Spread (...)
+
+Dart proporciona el operador spread (...), que permite insertar todos los elementos de una colección dentro de otra de forma más compacta y legible.
+Por ejemplo, el código anterior puede escribirse también como:
+
+```dart
+List<String> diasSemana = [
+  ...laborables,
+  ...festivos
+];
+
+print(diasSemana);
+```
 
 <br>
 
@@ -655,7 +739,15 @@ notas.remove("PMDM");
 
 // Para saber si un elemento existe
 print (notas.containsKey("PMDM"));
+
+Map<String, dynamic> pais = {
+  "nombre": "España",
+  "capital": "Madrid",
+  "poblacion": "48500000"
+};
 ```
+
+Más adelante utilizaremos este mecanismo para transformar listas de objetos JSON obtenidas desde una API en listas de objetos Dart.
 
 <br>
 
@@ -696,6 +788,19 @@ Por otra parte, esta función anónima que proporcionamos al método forEach pod
 laborables.forEach((dia) => print(dia));
 ```
 
+```dart
+List<String> continentes = [
+  "Europa",
+  "Asia",
+  "África",
+  "América",
+  "Oceanía"
+];
+
+for (String continente in continentes) {
+  print(continente);
+}
+```
 
 ### Recorrido de conjuntos
 
@@ -792,7 +897,7 @@ class NombreClase {
 
     // Constructor (opcional)
     NombreClase(Tipo1 arg1, Tipo2 arg2,...){
-        propiedad1=arg1; // Podemos utilizar this.propiedad1, pero no se recomienda
+        propiedad1=arg1; 
         propiedad2=arg2; 
         ...
     }
@@ -893,6 +998,8 @@ Para el ejemplo de la clase *Persona* tendríamos:
 Persona(this.nombre, this.apellidos);
 ```
 
+Actualmente, ésta es la forma más habitual de implementar constructores sencillos en Dart, ya que reduce considerablemente la cantidad de código necesario.
+
 
 ### **Constructores con paso de argumento por nombre**
 También es bastante habitual pasar los parámetros de inicialización del constructor por nombre, en lugar de hacerlo de forma posicional. Esto lo conseguimos con las llaves `{}`:
@@ -907,13 +1014,13 @@ NombreClase({
 El uso de la palabra reservada `required` indica la obligatoriedad de incluir el argumento, de manera que evitemos valores nulos. Si no utilizáramos el `required`, sería necesario bien indicar que es una propiedad *nullable* o indicarle un valor predeterminado, bien sea en su definición o bien en los parámetros del constructor:
 
 ```dart
-class NombreClasse{
+class NombreClase{
     ...
     Tipo? propiedad1; // Propiedad Nullable
     Tipo propiedad2=valor; // Con valor predeterminado
     Tipo propiedad3;
     ...
-    NomClasse({
+    NombreClase({
         this.propiedad1, 
         this.propiedad2,
         this.propiedad3=valor // Valor predeterminado al constructor
@@ -941,6 +1048,16 @@ NombreClase objecto=NombreClase(
 
 Y no importa el orden en que ponemos los argumentos, ya que lo que cuenta ahora es el nombre.
 
+```dart
+Pais({
+  required this.nombre,
+  this.capital,
+  this.poblacion,
+  this.imagen,
+});
+```
+
+Este tipo de constructores es muy frecuente en Flutter.
 
 ### **Múltiples constructores con nombre (named constructor)**
 
@@ -949,7 +1066,7 @@ Dart no soporta sobrecarga de constructores. Para posibilitar la construcción d
 ```dart
 NombreClase.constructor_con_nombre1(lista_argumentos_1){...}
 
-NomClasse.constructor_con_nombre2(lista_argumentos_2){...}
+NomClase.constructor_con_nombre2(lista_argumentos_2){...}
 ```
 
 Veremos un ejemplo de uso concreto de estos constructores en el siguiente apartado.
@@ -968,9 +1085,9 @@ final objetoJSON={
 Para crear el objeto, podemos crear un constructor con nombre que se inicialice a partir de un JSON, de la siguiente manera:
 
 ```dart
-class NombreClasse{
+class NombreClase{
     ...
-    NombreClasse.fromJSON( Map <Tipo1, Tipo2> objetoJSON){
+    NombreClase.fromJSON( Map <Tipo1, Tipo2> objetoJSON){
         propiedad1=objetoJSON['propiedad1'] ?? "valor_por_defecto1",
         propiedad2=objetoJSON['propiedad2'] ?? "valor_por_defecto2";
         ...
@@ -981,7 +1098,7 @@ class NombreClasse{
 
 Veamos los detalles:
 
-- El constructor `NomClasse.fromJSON` recibe un diccionario (`Map`) como argumento, que se utilizará para inicializar las propiedades de la instancia.
+- El constructor `NombreClase.fromJSON` recibe un diccionario (`Map`) como argumento, que se utilizará para inicializar las propiedades de la instancia.
   
 - En la declaración del mapa como argumento, definimos los tipos de la clave y el valor (`<Tipo1, Tipo2>`). Si no se indica, Dart infiere los tipos directamente.
   
@@ -1003,11 +1120,11 @@ Siguiendo el ejemplo de la definición de personas, podríamos hacer uso de un c
 class Persona {
   ...
 
-  Persona.fromJSON(Map<String, dynamic> objecteJSON) {
-    nombre = objecteJSON['nombre'];
-    apellidos = objecteJSON['apellidos'];
-    anyoNacimiento = objecteJSON['anyoNacimiento'];
-    especie = objecteJSON['especie'] ?? "Humana";
+  Persona.fromJSON(Map<String, dynamic> objetoJSON) {
+    nombre = objetoJSON['nombre'];
+    apellidos = objetoJSON['apellidos'];
+    anyoNacimiento = objetoJSON['anyoNacimiento'];
+    especie = objetoJSON['especie'] ?? "Humana";
   }
 
   ...
@@ -1044,10 +1161,10 @@ Otra forma en que nos podemos encontrar los constructores en Dart es haciendo us
 
 ```dart
 Persona.fromJSON(Map <String, dynamic> objecteJSON):
-    nombre = objetoJSON['nombre'];
-    apellidos = objetoJSON['apellidos'];
-    anyoNacimiento = objetoJSON['anyoNacimiento'];
-    especie = objetoJSON['especie'] ?? "Humana";
+    nombre = objetoJSON['nombre'],
+    apellidos = objetoJSON['apellidos'],
+    anyoNacimiento = objetoJSON['anyoNacimiento'],
+    especie = objetoJSON['especie'] ?? "Humana",
 
 ```
 
@@ -1121,12 +1238,14 @@ print(p.edat);
 ## Herencia
 Para que una clase pueda heredarse, necesita tener un constructor vacío, sin argumentos, que será el constructor predeterminado que usarán las subclases. **El resto de constructores, no se heredarán.**
 
+Cuando una superclase no dispone de un constructor sin argumentos, las subclases deberán invocar explícitamente alguno de los constructores disponibles mediante la palabra reservada `super`.
+
 ```dart
 class SuperClase{
   String propiedad1;
 
   // Constructor por defecto con lista de inicialización.
-  SuperClase():propiedad1="Valor per defecto en la superclasse";
+  SuperClase():propiedad1="Valor per defecto en la superclase";
 
   // Constructor con nombre (no se hereda)
   SuperClase.fromString(String s): this.propiedad1=s;
@@ -1136,7 +1255,7 @@ class SuperClase{
 Para definir una subclase, haremos uso de la palabra `extends`:
 
 ```dart
-class SubClasse extends SuperClase {
+class SubClase extends SuperClase {
   // Los constructores no se heredan
 }
 ```
@@ -1144,8 +1263,8 @@ class SubClasse extends SuperClase {
 Con ello podemos crear instancias de la subclase con:
 
 ```dart
-// Instància de la subclasse
-SubClasse sc1=SubClasse();
+// Instancia de la subclase
+SubClase sc1=SubClase();
 print("Propiedad 1 de la subclase: ${sc1.propietat1}");
 ```
 
@@ -1168,7 +1287,7 @@ class SubClass2 extends SuperClase {
 
 Ahora sí podemos invocar:
 ```dart
-SubClasse sc2=SubClasse.fromString("Prova");
+SubClase sc2=SubClase.fromString("Prueba");
 ```
 <br>
 
@@ -1203,7 +1322,7 @@ class Rectangulo extends Figura {
 Dart introduce el concepto de *interfaz implícita*, consistente en que cualquier clase puede usarse de interfaz. Para declarar que una clase implementa los métodos de otra clase, se utiliza la palabra reservada `implements`.
 
 ```dart
-class ClasseQueImplementaInterface implements ClasseQueHaceDeInterface{
+class ClaseQueImplementaInterface implements ClaseQueHaceDeInterface{
   // Implementación de los métodos de la clase que hace de interfaz
 }
 ```
@@ -1251,6 +1370,12 @@ m.fA();
 m.fB();
 m.fC();
 ```
+<br>
+
+Importante
+
+Flutter está basado completamente en clases y objetos. Los widgets, las pantallas, los temas visuales y gran parte de las estructuras del framework se representan mediante clases Dart. Por este motivo, comprender correctamente conceptos como constructores, herencia, composición y objetos es fundamental para trabajar con Flutter.
+
 <br>
 <br>
 
@@ -1302,7 +1427,7 @@ void main(){
 El resultado que se nos mostrará por pantalla será:
 
 ```
-Inici
+Inicio
 Instance of 'Future<String>'
 Final
 Estamos en funcioAsincrona
@@ -1347,11 +1472,10 @@ Inicio
 Instance of '_Future<String>'
 Final
 Estamos en funcioAsincrona
-Valor de retorn
+Valor de retorno
 ```
 
 Como vemos, la ejecución del programa ha seguido su camino, y la función se ha ejecutado y resuelto de forma asíncrona, pero ahora ya tenemos acceso al resultado.
-
 
 ### **Async/Await**
 
@@ -1370,7 +1494,7 @@ Además, cuando utilizamos un `await` dentro de una función (incluso la funció
 
 ```dart
 void main() async {
-  print("Inici");
+  print("Inicio");
 
   String a=await funcionAsincrona(); 
   print(a);
@@ -1382,11 +1506,26 @@ void main() async {
 Con esto el resultado ya será el esperado en un comportamiento síncrono:
 
 ```
-Inici
-Estem en funcioAsincrona
-Valor de retorn
+Inicio
+Estamos en funcioAsincrona
+Valor de retorno
 Final
 ```
+
+```
+Sin await:
+
+Future<String> f = funcion();
+
+Con await:
+
+String valor = await funcion();
+```
+
+`await` no elimina el asincronismo. La operación sigue siendo asíncrona, pero permite escribir el código de forma más parecida a una secuencia síncrona.
+
+Las peticiones HTTP son uno de los ejemplos más habituales de operaciones asíncronas, ya que la aplicación debe esperar a que el servidor responda. Por este motivo, en la siguiente unidad utilizaremos `Future` y `async/await` para acceder a APIs REST.
+
 
 ### **Tras el asincronismo en Dart: El evento Loop o Bucle de eventos**
 
@@ -1436,10 +1575,10 @@ void main() {
 El resultado de la ejecución de este programa es:
 
 ```
-Inici
+Inicio
 Final
-Hola des de la cua de micotasques
-Hola des de de la cua d'events
+Hola desde la cola de microtareas
+Hola desde la cola de eventos
 ```
 
 Disponemos de información adicional sobre el Evento Loop en los siguientes artículos:
@@ -1448,6 +1587,10 @@ Disponemos de información adicional sobre el Evento Loop en los siguientes art�
 - [El bucle de eventos y el dardo](https://dart.cn/articles/archive/event-loop)
 
 Además, también tenéis a vuestra disposición el siguiente *codelab* sobre *Futures* y *Async/Await* de la documentación oficial de Dart: <https://dart.dev/codelabs/async-await>
+
+### Nota
+
+Aunque el funcionamiento interno del Event Loop resulta interesante para comprender el comportamiento de Dart, en la mayoría de aplicaciones trabajaremos únicamente con `Future`, `then` y `async/await`, **sin necesidad de interactuar directamente con las colas de eventos y microtareas**.
 
 <br>
 
@@ -1559,13 +1702,13 @@ Si examinamos algún proyecto de Dart, veremos que hay un directorio oculto llam
 
 # <a name="_apartado9"></a>9. Peticiones HTTP
 
-En este apartado realizaemos con Dart algunas consultas a la Web, utilizando la librería HTTO que instalamos en el apartado anterior.
+En este apartado realizaremos con Dart algunas consultas a la Web, utilizando la librería HTTP que instalamos en el apartado anterior.
 
-## La llibrería [HTTP](https://pub.dev/packages/http)
+## La librería [HTTP](https://pub.dev/packages/http)
 
 En el apartado anterior ya hemos visto cómo incorporar la librería HTTP a nuestro proyecto, la cual nos permitirá llevar a cabo peticiones HTTP a cualquier recurso de red, haciendo uso de *Futures*.
 
-La librería HTTP, internamente define un conjunto de clases y funciones de alto nivel para el consumo de recursos HTTP, como puedan ser las funciones `get()`, `post()`, `update()`, `put()` o `delete()`, entre muchas otras.
+La librería HTTP, internamente define un conjunto de clases y funciones de alto nivel para el consumo de recursos HTTP, como puedan ser las funciones `get()`, `post()`, `patch()`, `put()` o `delete()`, entre muchas otras.
 
 La forma más sencilla de utilizar la biblioteca es importándola a nuestro código con:
 
@@ -1584,17 +1727,20 @@ import 'package:http/http.dart' as http;
 De manera que accedemos a las funcionalidades que se nos ofrecen como si se trataran métodos del espacio de nombres *http*: `http.get()`, `http.post()`, etc.
 
 ## Ejemplo de uso
-Vamos a hacer de los siguientes recursos en la web que nos ofrecen información sobre las diferentes comarcas de nuestro territorio:
 
-- [https://node-comarques-rest-server-production.up.railway.app/api/comarques/provincies](https://node-comarques-rest-server-production.up.railway.app/api/comarques/provincies), que nos ofrece una lista de las tres provincias de la comunidad.
-  
-- [https://node-comarques-rest-server-production.up.railway.app/api/comarques/](https://node-comarques-rest-server-production.up.railway.app/api/comarques/) seguido de *València*, *Alacant* o *Castelló*: que nos ofrece una lista de las comarcas de cada una de las provincias (Valencia, Alicante o Castellón), y
-  
-- [https://node-comarques-rest-server-production.up.railway.app/api/comarques/infoComarca/](https://node-comarques-rest-server-production.up.railway.app/api/comarques/infoComarca/xxxxxxxxxx){Comarca}: que nos ofrece información sobre la comarca indicada.
+Vamos a utilizar la API REST que luego aplicaremos en nuestra práctica, que nos permite obtener información sobre continentes y países.
 
-A continuación, veremos, a modo de ejemplo, cómo obtendríamos un listado de las comarcas de una provincia concreta.
+Concretamente, utilizaremos las siguientes rutas:
 
-Para ello, en nuestro proyecto podemos editar el fichero `bin/proyecto_ejemplo.dart` y añadimos el siguiente código:
+- [https://api-paises-uagm.onrender.com/continentes](https://api-paises-uagm.onrender.com/continentes), que devuelve el listado de continentes disponibles junto con una imagen representativa de cada uno.
+
+- [https://api-paises-uagm.onrender.com/paises/$continente](https://api-paises-uagm.onrender.com/paises/$continente), que devuelve la lista de países pertenecientes al continente indicado.
+
+- [https://api-paises-uagm.onrender.com/infopais/$pais](https://api-paises-uagm.detallada sobre el país solicitado.
+
+A continuación, veremos, a modo de ejemplo, cómo obtendríamos el listado de continentes disponibles.
+
+Para ello, en nuestro proyecto podemos editar el fichero `bin/proyecto_ejemplo.dart` y añadir el siguiente código:
 
 ```dart
 // Importamos las librerías necesarias
@@ -1603,74 +1749,93 @@ import 'package:http/http.dart' as http; // Para realizar peticiones HTTP
 
 void main(List<String> args) {
   // Definimos el endpoint o dirección del recurso:
-  String url = 'https://node-comarques-rest-server-production.up.railway.app/api/comarques/València';
+  String url =
+      'https://api-paises-uagm.onrender.com/continentes';
 
   // Lanzamos una petición GET mediante el método http.get:
-  var response = http.get(Uri.parse(url));
+  Future<http.Response> response = http.get(Uri.parse(url));
 
   // Esta nos devuelve un Future, que habrá que procesar
-  //con el método then:
+  // con el método then:
   response.then((data) {
-    // El Future se resuelve con una instancia del objeto response
-    // que tiene una propiedad statusCode con el código de estado
-    // y una propiedad body con el cuerpo de la respuesta.
+
+    // El Future se resuelve con un objeto Response,
+    // que contiene el código de estado de la petición
+    // y el cuerpo de la respuesta.
 
     if (data.statusCode == 200) {
+
       String body = utf8.decode(data.bodyBytes);
       final bodyJSON = jsonDecode(body) as List;
 
-      // Lo mostramos
+      // Mostramos el contenido recibido
       print(bodyJSON.toString());
-    } 
+    }
   });
 }
 ```
 
-Si ahora ejecutamos el proyecto con `dart run`, obtendremos la lista de comarcas de la provincia de Valencia.
+Si ahora ejecutamos el proyecto con `dart run`, obtendremos el listado de continentes proporcionado por la API.
 
-Aunque el código está bastante comentado, vamos a hacer algunas puntualizaciones:
+Aunque el código está bastante comentado, conviene hacer algunas puntualizaciones:
 
-- Observemos que hemos importado dos librerías: ***convert*** y ***http***. La librería ***convert***, es una librería estándar de Dart, y no hemos tenido que descargarla. Para indicar que se trata de una librería estándar, ponemos por delante **dart**:. Por otro lado, la libería HTTP, sí la hemos descargado como paquete, y por eso cuando la importamos ponemos **package** delante.
-  
-- Cuando hacemos la petición GET (`http.get()`), se nos devuelve un *`Future`*, que procesamos con `then`. El objeto de tipo `Response` al que se resuelve este *Future* contiene el código de estado de la petición HTTP (**`statusCode`**). Cuando este código es *200 (OK)*, indica que la petición se ha atendido correctamente, y que, por tanto, en la propiedad **`body`** disponemos de la respuesta. Este código puede indicar también errores en la petición (4xx, como el 404 Not Found), o errores internos del servidor (5xx).
-- Para descodificar el JSON que nos devuelve como respuesta, lo hemos hecho en dos pasos. En primer lugar, descodificamos la respuesta en formato UTF8, para descodificar caracteres especiales:
+- Observemos que hemos importado dos librerías: **convert** y **http**. La librería **convert** forma parte de la biblioteca estándar de Dart, por lo que no ha sido necesario descargarla. Por este motivo se importa mediante `dart:`. Por otro lado, la librería **http** sí se ha descargado como paquete externo, de ahí que se importe mediante `package:`.
+
+- Cuando realizamos la petición GET (`http.get()`), obtenemos un objeto de tipo `Future`, que procesamos mediante el método `then`. Este `Future` se resolverá con un objeto de tipo `Response`, que contiene, entre otras, las propiedades `statusCode` y `body`.
+
+- Cuando el código de estado es **200 (OK)**, significa que la petición se ha completado correctamente y que disponemos de una respuesta válida. Otros códigos pueden indicar errores de cliente (4xx) o errores del servidor (5xx).
+
+- Para descodificar el JSON recibido realizamos dos pasos. Primero descodificamos la respuesta en UTF-8 para evitar problemas con caracteres especiales:
 
 ```dart
 String body = utf8.decode(data.bodyBytes);
 ```
 
-Y luego descodificamos este String que se nos devuelve como un JSON, al que le hacemos un casting para convertirlo en lista:
+Posteriormente convertimos el contenido recibido en una estructura de datos Dart mediante `jsonDecode()`:
 
 ```dart
 final bodyJSON = jsonDecode(body) as List;
 ```
 
-En caso de obtener este último bodyJSON sin pasar previamente por la descodificación en UTF8, (`bodyJSON = jsonDecode(data.body) as List;`), nos aparecerían caracteres extraños en lugar de los acentos.
+En este caso realizamos una conversión a `List`, ya que la ruta `/continentes` devuelve una lista de elementos.
+
+Si intentáramos obtener el JSON directamente a partir de `data.body`:
+
+```dart
+final bodyJSON = jsonDecode(data.body) as List;
+```
+
+podríamos encontrarnos con problemas de codificación en determinados caracteres especiales o acentuados. Por este motivo se recomienda realizar previamente la conversión mediante `utf8.decode(data.bodyBytes)`.
+
+<br>
 
 ## Ejemplo con async/await
 
-En el ejemplo anterior la respuesta HTTP se nos devuelve en un *Future* de manera asíncrona. Si lo que queremos es esperarnos a obtener la respuesta directamente, sin hacer uso del mismo, podríamos lanzar la petición incorporando un `await`:
+En el ejemplo anterior, la respuesta HTTP se nos devuelve mediante un objeto de tipo *Future*. Si lo que queremos es esperar directamente a obtener la respuesta, sin utilizar el método `then()`, podemos hacer uso de la palabra reservada `await`:
 
 ```dart
 var response = await http.get(Uri.parse(url));
 ```
 
-Lo que nos obligaría, por otra parte, a definir la función `main` como `async`.
+Esto nos obliga, a su vez, a declarar la función que contiene el `await` como asíncrona mediante la palabra reservada `async`.
 
-De esta manera, ya podríamos tratar la respuesta directamente. El código completo quedaría:
+De esta manera, ya podemos trabajar directamente con la respuesta obtenida. El código completo quedaría:
 
 ```dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 void main(List<String> args) async {
-  String url = 'https://node-comarques-rest-server-production.up.railway.app/api/comarques/València';
 
-  // Lanzamos la petición GET
-  // Ahora response será de tipo Response, no un Future
-  var response = await http.get(Uri.parse(url));
+  String url =
+      'https://api-paises-uagm.onrender.com/continentes';
+
+  // Lanzamos la petición GET.
+  // Ahora response será de tipo Response y no un Future.
+  http.Response response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
+
     String body = utf8.decode(response.bodyBytes);
     final bodyJSON = jsonDecode(body) as List;
 
@@ -1678,3 +1843,21 @@ void main(List<String> args) async {
   }
 }
 ```
+
+Observemos la principal diferencia respecto al ejemplo anterior:
+
+```dart
+var response = await http.get(Uri.parse(url));
+```
+
+Al utilizar `await`, el programa espera a que finalice la petición HTTP antes de continuar con la siguiente instrucción. Además, la variable `response` ya no contiene un objeto de tipo `Future<Response>`, sino directamente un objeto de tipo `Response`.
+
+Este mecanismo resulta especialmente útil cuando queremos escribir código asíncrono de forma más legible y cercana a una secuencia de instrucciones tradicional.
+
+En la práctica de esta unidad encontraremos ambos enfoques:
+
+- Utilizando el método `then()`, para procesar el resultado de un `Future` mediante una función de callback.
+
+- Utilizando `async/await`, para obtener directamente el resultado de la operación asíncrona.
+
+Ambas técnicas son equivalentes, y la elección de una u otra dependerá del estilo de programación utilizado y de las necesidades concretas de cada aplicación.
