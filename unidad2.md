@@ -1736,7 +1736,7 @@ Concretamente, utilizaremos las siguientes rutas:
 
 - [https://api-paises-uagm.onrender.com/paises/$continente](https://api-paises-uagm.onrender.com/paises/$continente), que devuelve la lista de países pertenecientes al continente indicado.
 
-- [https://api-paises-uagm.onrender.com/infopais/$pais](https://api-paises-uagm.detallada sobre el país solicitado.
+- [https://api-paises-uagm.onrender.com/infopais/$pais](https://api-paises-uagm.onrender.com/infopais/$pais), devuelve información detallada sobre el país solicitado.
 
 A continuación, veremos, a modo de ejemplo, cómo obtendríamos el listado de continentes disponibles.
 
