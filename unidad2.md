@@ -976,12 +976,6 @@ void main (){
 
 Puede comprobar su funcionamiento en el siguiente Gist: <https://dartpad.dev/?id=89e4c3eb89cf029ee444d8e4f5a5b841>.
 
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=89e4c3eb89cf029ee444d8e4f5a5b841"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
 
 ### **Simplificación del constructor**
 El constructor se puede simplificar de la siguiente manera:
@@ -1146,13 +1140,6 @@ void main() {
 ```
 
 Disponemos del ejemplo completo al siguiente Gist: <https://dartpad.dev/?id=f7ed2afe29db34a283a786dc6eac2898>.
-
-<iframe
-  src="https://dartpad.dev/embed-inline.html?id=f7ed2afe29db34a283a786dc6eac2898"
-  width="100%"
-  height="500px"
-  frameborder="0">
-</iframe>
 
 
 ### **Listas de inicializadores o de inicialización**
