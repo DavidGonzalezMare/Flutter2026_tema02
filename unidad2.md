@@ -9,29 +9,29 @@ El framework **Flutter** hace uso del lenguaje **Dart**.
 
 En esta unidad vamos a hacer una breve introducción a este lenguaje y a sus principales características, con especial atención a la programación orientada a objetos, y a los mecanismos que se ofrecen para la programación asíncrona, de gran importancia en el desarrollo de interfaces dinámicas en Flutter.
 
-[*1. Introducción a Dart*](#_apartado1)
+[*1. Introducción a Dart*](unidad2.md#_apartado1)
 
-[*2. Tipos de Datos*](#_apartado2)
+[*2. Tipos de Datos*](unidad2.md#_apartado2)
 
-[*3. Programación Estructurada*](#_apartado3)
+[*3. Programación Estructurada*](unidad2.md#_apartado3)
 
-[*4. Funciones*](#_apartado4)
+[*4. Funciones*](unidad2.md#_apartado4)
 
-[*5. Colecciones*](#_apartado5)
+[*5. Colecciones*](unidad2.md#_apartado5)
 
-[*6. Programación Orientada a Objetos*](#_apartado6)
+[*6. Programación Orientada a Objetos*](unidad2.md#_apartado6)
 
-[*7. Programación Asíncrona*](#_apartado7)
+[*7. Programación Asíncrona*](unidad2.md#_apartado7)
 
-[*8. Proyectos en Dart*](#_apartado8)
+[*8. Proyectos en Dart*](unidad2.md#_apartado8)
 
-[*9. Peticiones HTTP*](#_apartado9)
+[*9. Peticiones HTTP*](unidad2.md#_apartado9)
 
 
 <br>
 <br>
 
-# <a name="_apartado1"></a>1. Introducción a Dart
+# <a id="_apartado1"></a>1. Introducción a Dart
 
 ## El lenguaje Dart
 
@@ -114,7 +114,7 @@ Hay que decir que, la clase `Stdin` permite al usuario leer datos de la entrada 
 <br>
 <br>
 
-# <a name="_apartado2"></a>2. Tipos de Datos
+# <a id="_apartado2"></a>2. Tipos de Datos
 
 Los tipos de datos soportados por Dart son:
 
@@ -260,7 +260,7 @@ Un tipo enumerado, al igual que las clases, debe definirse fuera de cualquier fu
 <br>
 
 
-# <a name="_apartado3"></a>3. Programación Estructurada
+# <a id="_apartado3"></a>3. Programación Estructurada
 
 La programación estructurada con Dart se basa en las estructuras condicionales y de repetición habituales: *`if..else`*, *`switch`*, *`for`*, *`forEach`* y *`while`*. Además, también soporta el operador condicional ternario (`?`).
 
@@ -454,7 +454,7 @@ continentes.forEach((continente) {
 <br>
 <br>
 
-# <a name="_apartado4"></a>4. Funciones
+# <a id="_apartado4"></a>4. Funciones
 
 ## Declaración de funciones
 
@@ -599,7 +599,7 @@ También es muy habitual cuando utilizamos constructores con argumentos con nomb
 <br>
 <br>
 
-# <a name="_apartado5"></a>5. Colecciones
+# <a id="_apartado5"></a>5. Colecciones
 
 Las colecciones son objetos que representan un grupo de elementos, y pueden tener diferentes estructuras y comportamientos. Las colecciones más habituales son las listas, los conjuntos y los mapas.
 
@@ -881,7 +881,7 @@ El codelab de Dart sobre iterables: <https://dart.dev/codelabs/iterables>
 <br>
 <br>
 
-# <a name="_apartado6"></a>6. Programación Orientada a Objetos
+# <a id="_apartado6"></a>6. Programación Orientada a Objetos
 
 La orientación a objetos es de gran importancia en Dart, y sobre todo en Flutter, ya que en estos conceptos se basará todo el diseño de interfaces mediante *widgets*.
 
@@ -1379,7 +1379,7 @@ Flutter está basado completamente en clases y objetos. Los widgets, las pantall
 <br>
 <br>
 
-# <a name="_apartado7"></a> 7. Programación Asíncrona
+# <a id="_apartado7"></a> 7. Programación Asíncrona
 
 En este apartado vamos a abordar uno de los aspectos más complejos y a la vez interesantes del lenguaje Dart: **la programación asíncrona**. 
 
@@ -1608,7 +1608,7 @@ Los retomaremos en el futuro.
 <br>
 <br>
 
-# <a name="_apartado8"></a>8. Proyectos en Dart 
+# <a id="_apartado8"></a>8. Proyectos en Dart 
 
 ## Proyectos con Dart
 Hasta ahora hemos desarrollado programas con Dart que consistían con un único fichero, y que ejecutábamos con el orden la herramienta de la línea de órdenes dart.
@@ -1700,7 +1700,7 @@ Si examinamos algún proyecto de Dart, veremos que hay un directorio oculto llam
 <br>
 <br>
 
-# <a name="_apartado9"></a>9. Peticiones HTTP
+# <a id="_apartado9"></a>9. Peticiones HTTP
 
 En este apartado realizaremos con Dart algunas consultas a la Web, utilizando la librería HTTP que instalamos en el apartado anterior.
 
