@@ -262,35 +262,6 @@ Aunque esta organización puede parecer compleja para un programa sencillo, tien
 - Escalabilidad: Es fácil añadir nuevas fuentes de datos (caché, fichero, base de datos local...)
 
 
-VOY POR AQUÍ
-
-
-
-- El fichero `lib/paises_service.dart` contiene la clase `PaisesService`, que contiene métodos estáticos (con el fin de no tener que instanciar la clase) con las peticiones al servicio web.
-
-La funcionalidad correspondiente a la parte de los continentes ya se os da implementada a modo de ejemplo, de manera que habrá que implementar la funcionalidad correspondiente a los países.
-
-
-## Acceso al servicio
-
-La clase `PaisesService` será la encargada de proporcionar, mediante métodos estáticos, el **acceso al servicio web**, y devolver las listas o los objetos requeridos por la aplicación principal.
-
-Esta clase implementará los métodos:
-
-- `Future<List<Continente>> obtenerContinentes()`: devuelve un `Future` que se resolverá en una lista de objetos de tipo `Continente`, generada a partir de la respuesta obtenida en la ruta `/continentes`.
-
-  Este método ya se os proporciona implementado.
-
-- `Future<List<dynamic>> obtenerPaises(String continente)`: devuelve un `Future` que se resolverá en una lista de objetos dinámicos a partir de la respuesta obtenida en la ruta `/paises/$continente`.
-
-  Ten en cuenta que, en este método, a diferencia del anterior, no es necesario realizar ninguna conversión del resultado de la petición web; directamente devolveremos el JSON recibido.
-
-- `Future<Pais?> infoPais(String pais)`: devuelve un `Future` con un objeto de tipo `Pais`, generado a partir de la petición web a la ruta `/infopais/$pais`.
-
-  En este caso, sí será necesario convertir el objeto JSON recibido en un objeto de tipo `Pais`.
-
-<br>
-  
 ## El fichero principal `paisescli.dart`
 
 ### Tratamiento de argumentos
