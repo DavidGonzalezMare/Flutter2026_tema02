@@ -42,8 +42,6 @@ Debemos tener en cuenta que si utilizamos nombres de países compuestos, habrá 
 dart run paisescli infopais "Estados Unidos"
 ```
 
-
-
 ## Consideraciones sobre la API
 
 Para obtener la información sobre los continentes y países haremos uso de la API REST proporcionada para la práctica.
@@ -93,18 +91,28 @@ Esta estructura sigue una arquitectura en tres capas principales, cada una con u
 - La capa de interacción con el usuario,
 - La capa de Dominio, y
 - La capa de Datos, que consta de dos subcapas: La subcapa de Servicio i la subcapa de Repositorio.
+  
+La relación entre las capas es la siguiente:
 
-VOY POR AQUÍ
+![Capas](./images/imagen0.jpg) 
 
-- El fichero principal `bin/paisescli.dart` contiene la funcionalidad principal de la aplicación: recoge lo que le proporcionamos por la línea de órdenes y hace uso del resto de clases y funciones para mostrar los resultados.
+### Capa de interacción con el usuario
+
+Esta capa tiene la responsabildad de interactual con el usuario y coordinar la ejecución del programa.
+
+El fichero principal `bin/paisescli.dart` contiene la funcionalidad principal de la aplicación: recoge lo que le proporcionamos por la línea de órdenes y hace uso del resto de clases y funciones para mostrar los resultados.
+
+### Capa de Dominio
+
+Representa la capa central de la aplicación, y contiene la lógica de negocio y las entidadesd del dominio. Esta capa es representa a la carpeta `lib/domain`.
+
+Cuando la lógica de negocio es compleja, se puede introducir en esta una subcapa de casos de uso (`usecases`),que encapsulan esta lógica de negocio. En nuestro caso no vamos a utilizar esa capa.
+
+Lo que sí que vamos a utilizar son las Entidades del dominio, ubicadas en la carpeta `lib/domain/entities`. Son las clases que representan los conceptos principales de nuestro negocio.
 
 - Los ficheros `lib/domain/entities/pais.dart` y `lib/domain/entities/continente.dart` contienen las clases `Pais` y `Continente` respectivamente, que detallaremos a continuación.
 
-- El fichero `lib/paises_service.dart` contiene la clase `PaisesService`, que contiene métodos estáticos (con el fin de no tener que instanciar la clase) con las peticiones al servicio web.
-
-La funcionalidad correspondiente a la parte de los continentes ya se os da implementada a modo de ejemplo, de manera que habrá que implementar la funcionalidad correspondiente a los países.
-
-## La clase Continente
+**La clase Continente**
 
 La clase `Continente` que ya se os proporciona implementada, contiene dos atributos de tipo `String`: el nombre y la imagen (opcional):
 
@@ -138,7 +146,7 @@ class Continente {
   }
 ```
 
-## La clase Pais
+**La clase Pais**
 
 Habrá que implementar una clase Pais, que guardará la información del país cuando se hace una consulta.
 Esta clase tendrá las siguientes propiedades:
@@ -174,6 +182,95 @@ Además, se sobreescribirá el método `toString`, para devolver un `String` con
 
 Cuando se reciba respuesta a la petición HTTP pidiendo información sobre un país, deberemos crear un objeto de la clase `Pais`. Posteriormente, cuando vamos a mostrar el resultado, haremos uso del método `toString` que hemos sobreescrito en esta clase.
 
+### Capa de Datos
+
+La capa de datos se encarga de gestionar el acceso a los datos externos (APIs, bases de datos, ficheros...). Esta capa se divide en dos subcapas: la capa de servicios y la capa de repositorio.
+
+En nuestro proyecto, tenemos dividida esta capa en la siguiente estructura de carpetas:
+
+```text
+data
+├── repositories
+│     └── paises_repository.dart   
+└──  services
+      └── paises_api.dart   
+
+```
+
+**Subcapa de servicios**
+
+Los servicios son clases que se encargan de la comunicación con fuentes de datos externas. En este caso, la clase `PaisesAPI` (fichero paises_api.dart) gestiona las peticiones HTTP a la API (GET, procesar respuestas, gestionar errores...).
+
+La responsabilidad de esta subcapa es la de comunicarse con la API, procesar el JSON de respuesta y devolverlo.
+
+De manera resumida la clase PaisesAPI:
+
+```dart
+class PaisesApi {
+  String urlBase;
+
+  Future<List<dynamic>> getContinentes(): async
+  Future<List<dynamic>> getPaises(String continente): async 
+  Future<dynamic?> infoPais(String pais): async 
+}
+
+```
+
+- `getContinentes()`: Devuelve la lista completa de continentes, generada a partir de la respuesta obtenida en la ruta `/continentes`. **Ya implementado**.
+  
+- `getPaises(String continente)`: Devuelve la lista de paises de un continente. Lista de objetos dinámicos a partir de la respuesta obtenida en la ruta `/paises/$continente`. **Por implementar**.
+
+- `infoPais(String pais)`:Devuelve la información de un país. a partir de la petición web a la ruta `/infopais/$pais`. **Por implementar**.
+
+
+<br>
+
+**Subcapa de repositorio**
+
+Los repositorios actúan como intermediarios entre la capa de datos y el resto de la aplicación.
+
+Son responsables de la obtención de datos de la API (o de la fuente de datos que se use), transformar esta información en entidades del dominio y proporcionarlas al resto de la aplicación.
+
+Esta capa nos permite abstraer e independizar el código desde donde vienen los datos del resto de la aplicación: el código que utiliza los datos (entidades de dominio) ne tiene por qué saber de donde vienen.
+
+```dart
+class PaisesRepository {
+  String urlBase;
+  PaisesApi api;
+
+  Future<List<Continente>> getContinentes(): async
+  Future<List<Pais>> getPaises(String continente): async 
+  Future<Pais> infoPais(String pais): async
+}
+
+```
+
+
+Es interesante observar que los métodos son los mismos que ofrece la subcapa de servicio, con la diferencia que el repositorio devuelve objetos que están en el dominio de la aplicación (`Continente`, `Pais`), en lugar `dynamic` que se utilizar en la subcapa de servicio.
+
+Es decir, podemos ver como este repositorio está haciendo de intermediario y traduciendo la representación interna de los datos que nos devuelve la API (diccionarios JSON) a los objtos con los que trabaja nuestra aplicación.
+
+Veamos, a modo de ejemplo, cómo haríamos una petición de los continentes:
+
+![Flujo de datos](./images/imagen2.png) 
+
+Aunque esta organización puede parecer compleja para un programa sencillo, tiene importantes ventajas:
+
+- Separación de responsabilidades: Cada capa hace únicamente una cosa
+- Mantenimiento más sencillo: Si cambia la API únicamente hay modificar `paises_ap.dart`
+- Facilidad de testeo en cada capa de manera independiente
+- Escalabilidad: Es fácil añadir nuevas fuentes de datos (caché, fichero, base de datos local...)
+
+
+VOY POR AQUÍ
+
+
+
+- El fichero `lib/paises_service.dart` contiene la clase `PaisesService`, que contiene métodos estáticos (con el fin de no tener que instanciar la clase) con las peticiones al servicio web.
+
+La funcionalidad correspondiente a la parte de los continentes ya se os da implementada a modo de ejemplo, de manera que habrá que implementar la funcionalidad correspondiente a los países.
+
+
 ## Acceso al servicio
 
 La clase `PaisesService` será la encargada de proporcionar, mediante métodos estáticos, el **acceso al servicio web**, y devolver las listas o los objetos requeridos por la aplicación principal.
@@ -191,6 +288,8 @@ Esta clase implementará los métodos:
 - `Future<Pais?> infoPais(String pais)`: devuelve un `Future` con un objeto de tipo `Pais`, generado a partir de la petición web a la ruta `/infopais/$pais`.
 
   En este caso, sí será necesario convertir el objeto JSON recibido en un objeto de tipo `Pais`.
+
+<br>
   
 ## El fichero principal `paisescli.dart`
 
