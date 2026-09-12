@@ -18,5 +18,5 @@
 
   [*9. Peticiones HTTP*](unidad2.md#_apartado9)
 
-  [Práctica 1](practica/practica2.md#_apartado1)
+  [Práctica 2](practica/practica2.md#_apartado1)
 
