@@ -152,7 +152,7 @@ Además, también podemos declarar datos como `final`, para indicar que no podr�
 
 ### **Null Safety y tratamiento de valores nulos**
 
-Dart es un lenguaje de **tipado seguro**, lo que significa que cuando declaramos una variable de algún tipo, el compilador garantiza que los valores asignados sean de este tipo. Aunque el tipado es obligatorio, indicar el tipo de una variable es opcional. En caso de que no indiquemos el tipo, éste será inferido a partir del valor con que se inicialice.
+Dart es un lenguaje de **tipado seguro**, lo que significa que cuando declaramos una variable de algún tipo, el compilador garantiza que los valores asignados sean de este tipo. Aunque el tipado es obligatorio, indicar el tipo de una variable es opcional. En caso de que no indiquemos el tipo, este será inferido a partir del valor con que se inicialice.
 
 Desde la versión 2.12 (marzo de 2021), Dart soporta también *Null Safety*, de manera que, por defecto, una variable no podrá contener valores nulos a no ser que se especifique lo contrario, ahorrando así los problemas derivados de valores nulos.
 
@@ -228,7 +228,7 @@ List<dynamic> paises;
 
 Encontraremos este tipo con frecuencia cuando trabajemos con datos procedentes de servicios web, ya que inicialmente la información obtenida desde una API suele representarse mediante estructuras dinámicas que posteriormente convertiremos en objetos Dart.
 
-Tenemos más detalles al artículo [Dart es un lenguaje de programación de tipo estático o dinámico](https://medium.com/@farhanaslam910/dart-is-a-static-or-dynamic-typed-programming-language-3d934c95b7b)
+Tenemos más detalles en el artículo [Dart es un lenguaje de programación de tipo estático o dinámico](https://medium.com/@farhanaslam910/dart-is-a-static-or-dynamic-typed-programming-language-3d934c95b7b)
 
 ### **Tipos enumerados**
 

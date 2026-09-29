@@ -94,7 +94,7 @@ Esta estructura sigue una arquitectura en tres capas principales, cada una con u
   
 La relación entre las capas es la siguiente:
 
-![Capas](./images/imagen0.jpg) 
+![Capas](./images/imagen0.png) 
 
 ### Capa de interacción con el usuario
 
